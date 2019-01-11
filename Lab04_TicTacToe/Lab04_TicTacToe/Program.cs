@@ -10,7 +10,7 @@ namespace Lab04_TicTacToe
             Console.WriteLine("In main, show example board");
             Game nugame = new Game(new Player(), new Player());
             Player winner = nugame.Play();
-            Console.WriteLine(winner.Name);
+            Console.WriteLine($"{winner.Name}");
         }
     }
 }

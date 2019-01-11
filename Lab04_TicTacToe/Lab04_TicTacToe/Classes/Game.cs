@@ -47,6 +47,8 @@ namespace Lab04_TicTacToe.Classes
 
             Use any and all pre-existing methods in this program to help construct the method logic. 
              */
+            PlayerSetup();
+
             int turnCount = 0;
 
             while (CheckForWinner(Board) && turnCount < 10)
@@ -55,15 +57,36 @@ namespace Lab04_TicTacToe.Classes
                 NextPlayer().TakeTurn(Board);
                 if (CheckForWinner(Board))
                 {
-                    Winner = PlayerOne.IsTurn ? PlayerOne : PlayerTwo;
+                    Winner = NextPlayer();
                 }
                 turnCount++;
+                SwitchPlayer();
             }
             
+            if (turnCount >= 10)
+            {
+                Player draw = new Player();
+                draw.Name = "Draw!";
+                Winner = draw;
+            }
 
             Board.DisplayBoard();
             return Winner;
 		}
+
+        private void PlayerSetup()
+        {
+            PlayerOne.Marker = "X";
+            PlayerTwo.Marker = "O";
+            if (PlayerOne.Name == null)
+            {
+                PlayerOne.Name = "Player 1";
+            }
+            if (PlayerTwo.Name == null)
+            {
+                PlayerTwo.Name = "Player 1";
+            }
+        }
 
 
 		/// <summary>
@@ -100,7 +123,10 @@ namespace Lab04_TicTacToe.Classes
 
 				// TODO:  Determine a winner has been reached. 
 				// return true if a winner has been reached. 
-			
+			    if (a == b && a == c && a == NextPlayer().Marker)
+                {
+                    return true;
+                }
 			}
 
 			return false;
