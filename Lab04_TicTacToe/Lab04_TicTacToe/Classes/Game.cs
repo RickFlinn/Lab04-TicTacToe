@@ -10,8 +10,7 @@ namespace Lab04_TicTacToe.Classes
 		public Player PlayerTwo { get; set; }
 		public Player Winner { get; set; }
 		public Board Board { get; set; }
-
-
+        
 		/// <summary>
 		/// Require 2 players and a board to start a game. 
 		/// </summary>
@@ -47,11 +46,26 @@ namespace Lab04_TicTacToe.Classes
 
             Use any and all pre-existing methods in this program to help construct the method logic. 
              */
-            PlayerSetup();
+
+            PlayerOne.Marker = "X";
+            PlayerTwo.Marker = "O";
+            if (PlayerOne.Name == null)
+            {
+                PlayerOne.Name = "Player 1";
+            }
+            if (PlayerTwo.Name == null)
+            {
+                PlayerTwo.Name = "Player 2";
+            }
+            PlayerOne.IsTurn = true;
+            
+            Player draw = new Player();
+            draw.Name = "Nobody";
+            Winner = draw;
 
             int turnCount = 0;
 
-            while (CheckForWinner(Board) && turnCount < 10)
+            while (!CheckForWinner(Board) && turnCount < 9)
             {
                 Board.DisplayBoard();
                 NextPlayer().TakeTurn(Board);
@@ -63,30 +77,10 @@ namespace Lab04_TicTacToe.Classes
                 SwitchPlayer();
             }
             
-            if (turnCount >= 10)
-            {
-                Player draw = new Player();
-                draw.Name = "Draw!";
-                Winner = draw;
-            }
-
             Board.DisplayBoard();
             return Winner;
 		}
 
-        private void PlayerSetup()
-        {
-            PlayerOne.Marker = "X";
-            PlayerTwo.Marker = "O";
-            if (PlayerOne.Name == null)
-            {
-                PlayerOne.Name = "Player 1";
-            }
-            if (PlayerTwo.Name == null)
-            {
-                PlayerTwo.Name = "Player 1";
-            }
-        }
 
 
 		/// <summary>
@@ -121,9 +115,9 @@ namespace Lab04_TicTacToe.Classes
 				string b = Board.GameBoard[p2.Row, p2.Column];
 				string c = Board.GameBoard[p3.Row, p3.Column];
 
-				// TODO:  Determine a winner has been reached. 
-				// return true if a winner has been reached. 
-			    if (a == b && a == c && a == NextPlayer().Marker)
+                // Checks the possible winning positions for the current player's markers. 
+                // Returns true if all three positions are occupied by their markers, i.e. the player has won the game.
+                if (a == b && a == c)
                 {
                     return true;
                 }
@@ -149,10 +143,7 @@ namespace Lab04_TicTacToe.Classes
 		{
 			if (PlayerOne.IsTurn)
 			{
-              
 				PlayerOne.IsTurn = false;
-
-              
 				PlayerTwo.IsTurn = true;
 			}
 			else

@@ -16,11 +16,12 @@ namespace Lab04_TicTacToe.Classes
 			{"7", "8", "9"},
 		};
 
-
+        /// <summary>
+        /// Outputs the current board state to the console. 
+        /// </summary>
 		public void DisplayBoard()
 		{
-
-            //TODO: Output the board to the console
+            
             for (int i = 0; i < 3; i++)
             {
                 string rowDisplay = "";
